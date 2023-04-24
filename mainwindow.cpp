@@ -1,11 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QApplication>
 #include <QTreeWidgetItem>
-#include <iostream>>
-int len, goal, guess, lives;
+#include <QDialogButtonBox>
+
+int len = 0, goal = 0, guess = 0, lives = 0;
+bool win;
+
 
 /* generates a goal, n digits long */
 ulong gengoal(ulong n)
@@ -14,20 +18,20 @@ ulong gengoal(ulong n)
     /* it's technically legal, but
     we get a int that's shorter than n */
     do
-        num = rand() % 10;
+        num = arc4random() % 10;
     while (num == 0);
 
     /* we have already generated one digit */
     while(n > 1)
     {
         num *= 10;
-        num += rand() % 10;
+        num += arc4random() % 10;
         n--;
     }
     return num;
 }
 
-uint length(ulong n)
+int length(ulong n)
 {
     ulong t = 0;
     while(n > 0)
@@ -41,7 +45,7 @@ uint length(ulong n)
 /* we could also use arrays for this,
     alas, that would a can of worms
     digit(number, index) = number[index] */
-int digit(long number, uint index)
+int digit(long number, int index)
 {
     if((index > length(number)) || (index < 0))
         return -1;
@@ -55,30 +59,15 @@ int digit(long number, uint index)
     }
     return j;
 }
-void anotherround()
-{
-    srand(time(nullptr));
-    switch(rand % 2)
-    {
 
-    }
-}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     /* dear Qt, with all due respect, why you on earth
      * you try to make my life so misearable? */
-    bool res = 0;
-    do
-    {
-        len = QInputDialog::getInt(0, "MasterMind", "Enter Length of number:", 2, 2, 9, 1, &res);
-    }while(!res);
-    ui->setupUi(this);
-    lives = len;
-    goal = gengoal(len);
-    ui->lcdLives->display(lives);
-    ui->spinGuess->setMaximum(pow(10, len) - 1);
+    action_newgame();
 }
 
 MainWindow::~MainWindow()
@@ -94,7 +83,7 @@ void MainWindow::action_aboutqt()
 
 void MainWindow::action_about()
 {
-	QMessageBox::about(this, "about", "MasterMind-qt r1");
+    QMessageBox::about(this, "about", "MasterMind-qt r2");
 }
 
 void MainWindow::action_guide(){}
@@ -102,52 +91,134 @@ void MainWindow::action_guide(){}
 // cheats menu
 void MainWindow::action_showgoal()
 {
-    QString g = QString::fromStdString("It's " + std::to_string(goal) + " you cheater");
-    QMessageBox::information(this, "Cheat", g, "k");
+    QMessageBox m;
+    m.setWindowTitle("Cheat");
+    m.setText(QString::fromStdString("It's " + std::to_string(goal) + " you cheater"));
+    m.setIcon(QMessageBox::Information);
+    m.addButton("k", QMessageBox::AcceptRole);
+    m.exec();
 }
 
-void MainWindow::action_hesoyam(){
-    lives = INT_MAX;
+void MainWindow::action_inflives(){
+    if(lives > 9)
+    {
+        QMessageBox m;
+        m.setWindowTitle("Cheat");
+        m.setText("Oi mate, it is already enabled!");
+        m.setIcon(QMessageBox::Information);
+        m.addButton("oh huh", QMessageBox::AcceptRole);
+        m.exec();
+        return;
+    }
+    else if(win)
+        return;
+    lives = 999;
+    ui->lcdLives->display(9);
+    /* if the game is over */
+    ui->buttonGuess->setEnabled(true);
+    ui->spinGuess->setEnabled(true);
+    ui->textChecked->setEnabled(true);
 }
 
 // file menu
-void MainWindow::action_newgame(){}
-void MainWindow::action_giveup(){}
+
+void MainWindow::action_newgame()
+{
+    bool res = 0;
+    do
+    {
+        len = QInputDialog::getInt(0, "MasterMind", "Enter Length of number:", 2, 2, 9, 1, &res);
+    } while(!res);
+    ui->setupUi(this);
+    lives = len;
+    goal = gengoal(len);
+    win = false;
+    ui->lcdLives->display(lives);
+    ui->spinGuess->setMaximum(pow(10, len) - 1);
+    ui->spinGuess->setMinimum(pow(10, len - 1));
+
+}
+void MainWindow::action_giveup(){
+    QMessageBox m;
+    m.setText("But-But... are you really totally 100% completely sure about it?");
+    m.setIcon(QMessageBox::Question);
+    m.addButton(QString::fromStdString("Yea"), QMessageBox::AcceptRole);
+    m.addButton(QString::fromStdString("Nay!"), QMessageBox::RejectRole);
+    switch(m.exec())
+    {
+        case QMessageBox::AcceptRole:
+            action_newgame();
+    }
+}
 
 // main window
 void MainWindow::action_guess()
 {
+    QString s;
     guess = ui->spinGuess->text().toInt();
     if(guess == goal)
+    {
+       win = true;
+       s = '#';
+       ui->textChecked->setText(s.repeated(len));
+       ui->buttonGuess->setEnabled(false);
+       ui->spinGuess->setEnabled(false);
 
-       return;
+       QMessageBox m;
+       m.setWindowTitle("YOU WIN!");
+       m.setText("I am, as your servent pleased "
+                 "to assure you, that; you have managed to win.");
+       m.setIcon(QMessageBox::Information);
+       m.addButton(QString::fromStdString("umm now what..."), QMessageBox::AcceptRole);
+       m.exec();
+       // XXX: high scores?
+    }
     else if(lives == 1)
     {
-        lives--;
         /* :( */
-        QMessageBox::critical(this, "MasterMind", "I'm afraid you have failed to achive what"
-                                                  " you have tried to do, and now we are all in"
-                                                  " brink of impading doom...", "k", "Oh no, "
-                                                  "how shall i endure such shame...");
+        ui->lcdLives->display(--lives);
+        ui->buttonGuess->setEnabled(false);
+        ui->spinGuess->setEnabled(false);
+
+        QMessageBox m;
+        m.setWindowTitle("INSERT COIN");
+        m.setText("I'm afraid you have failed to achive what"
+                  " you have tried to do, and now we are all in"
+                  " brink of impading doom...");
+        m.setIcon(QMessageBox::Critical);
+        m.addButton(QString::fromStdString("another chance?"), QMessageBox::AcceptRole);
+        m.addButton(QString::fromStdString("dices were packed! new game and i shall win!"), QMessageBox::RejectRole);
+        m.addButton(QString::fromStdString("God has forsaken me, *leaving in shame*"), QMessageBox::DestructiveRole);
+        switch(m.exec())
+        {
+            case QMessageBox::AcceptRole:
+                // XXX live++
+                break;
+            case QMessageBox::RejectRole:
+                action_newgame();
+                break;
+            case QMessageBox::DestructiveRole:
+                close();
+                break;
+        }
     }
     else
     {
         int i = length(goal) - 1;
-        QString s;
-        while(i+1 > 0)
+        while(i + 1 > 0)
         {
             if(digit(goal, i) == digit(guess, i))
                 s += '#';
             else
-                s += 'X';
+                s += "<font color=red>X</font>";
             i--;
         }
-        MainWindow::ui->textChecked->setText(s);
+        ui->textChecked->setHtml(s);
         ui->lcdLives->display(--lives);
         QTreeWidgetItem *n = new QTreeWidgetItem();
         n->setText(0, QString::fromStdString(std::to_string(len - lives)));
         n->setText(1, QString::fromStdString(std::to_string(guess)));
-        n->setText(2, s);
+        n->setText(2, ui->textChecked->toPlainText());
         ui->treeHistory->addTopLevelItem(n);
     }
 }

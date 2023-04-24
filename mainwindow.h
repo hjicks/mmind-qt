@@ -26,7 +26,7 @@ private slots:
 
     // cheats menu
     void action_showgoal();
-    void action_hesoyam();
+    void action_inflives();
 
     // file menu
     void action_newgame();

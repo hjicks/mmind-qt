@@ -1,10 +1,8 @@
 #include "mainwindow.h"
-#include "fn.h"
 
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QApplication>
-#include <iostream> //debug
 
 using namespace std;
 // I dare not to take a look at what i've done
@@ -12,6 +10,8 @@ using namespace std;
 // move aux funcations into a .h file,
 // try to refactor it
 // debug it, if you can
+// remove resize grip
+// XXXs in code
 
 int main(int argc, char *argv[])
 {
