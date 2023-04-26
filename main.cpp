@@ -12,6 +12,7 @@ using namespace std;
 // debug it, if you can
 // remove resize grip
 // XXXs in code
+// get rid of QString::fromStdString(std::(to_string(...)))
 
 int main(int argc, char *argv[])
 {

@@ -166,15 +166,17 @@ bool MainWindow::action_newgame()
     /* you pressed cancel "by mistake" ? too bad! your fault. */
     return res;
 }
-void MainWindow::action_giveup(){
+void MainWindow::action_giveup()
+{
     QMessageBox m;
+    QAbstractButton *y;
     m.setText("But-But... are you really totally 100% completely sure about it?");
     m.setIcon(QMessageBox::Question);
-    m.addButton(QString::fromStdString("Yea"), QMessageBox::AcceptRole);
-    m.addButton(QString::fromStdString("Nay!"), QMessageBox::RejectRole);
-    switch(m.exec())
+    y = m.addButton("Yea", QMessageBox::AcceptRole);
+    m.addButton("Nay!", QMessageBox::RejectRole);
+    m.exec();
+    if(m.clickedButton() == y)
     {
-        case QMessageBox::AcceptRole:
             action_newgame();
     }
 }
@@ -212,17 +214,19 @@ void MainWindow::action_guess()
         ui->treeHistory->setEnabled(false);
 
         QMessageBox m;
+        QAbstractButton *retry, *newgame, *leave;
         m.setWindowTitle("INSERT COIN");
         m.setText("I'm afraid you have failed to acheive what"
                   " you had to do, and now we are all in"
                   " brink of impading doom...");
         m.setIcon(QMessageBox::Critical);
-        m.addButton(QString::fromStdString("another chance?"), QMessageBox::AcceptRole);
-        m.addButton(QString::fromStdString("dices were packed! new game and i shall win!"), QMessageBox::RejectRole);
-        m.addButton(QString::fromStdString("God has forsaken me, *leaving in shame*"), QMessageBox::DestructiveRole);
-        switch(m.exec())
+        retry = m.addButton(QString::fromStdString("another chance?"), QMessageBox::AcceptRole);
+        newgame = m.addButton(QString::fromStdString("dices were packed! new game and i shall win!"), QMessageBox::RejectRole);
+        leave = m.addButton(QString::fromStdString("God has forsaken me, *leaving in shame*"), QMessageBox::DestructiveRole);
+        m.exec();
+        /* fun(?) fact: switch doesn't work with non numerical types! */
+        if(m.clickedButton() == retry)
         {
-            case QMessageBox::AcceptRole:
                 /* maybe we should move these into a funcation?
                  * or maybe we should not... carry on */
                 ui->lcdLives->display(++lives);
@@ -230,14 +234,11 @@ void MainWindow::action_guess()
                 ui->spinGuess->setEnabled(true);
                 ui->textChecked->setEnabled(true);
                 ui->treeHistory->setEnabled(true);
-                break;
-            case QMessageBox::RejectRole:
-                action_newgame();
-                break;
-            case QMessageBox::DestructiveRole:
-                close();
-                break;
         }
+        else if(m.clickedButton() == newgame)
+                action_newgame();
+        else if(m.clickedButton() == leave)
+                close();
     }
     else
     {
