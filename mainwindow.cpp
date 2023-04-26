@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QtGlobal>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QApplication>
@@ -132,7 +131,7 @@ void MainWindow::action_inflives(){
     }
     else if(win)
         return;
-    lives = 999;
+    lives = INT_MAX;
     ui->lcdLives->display(9);
     /* if the game is over */
     ui->buttonGuess->setEnabled(true);
@@ -157,7 +156,6 @@ bool MainWindow::action_newgame()
         ui->spinGuess->setMinimum(pow(10, len - 1));
     }
     /* you pressed cancel "by mistake" ? too bad! your fault. */
-    qInfo() << res;
     return res;
 }
 void MainWindow::action_giveup(){
