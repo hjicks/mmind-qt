@@ -1,11 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QMessageBox>
-#include <QInputDialog>
-#include <QApplication>
-#include <QTreeWidgetItem>
-#include <QDialogButtonBox>
+#include <QMessageBox> /* errors, infos */
+#include <QInputDialog> /* getting len */
+#include <QApplication> /* seems to be needed in all qt programs */
+#include <QTreeWidgetItem> /* guessTree */
+#include <QClipboard>
 
 int len = 0, goal = 0, guess = 0, lives = 0;
 bool win;
@@ -31,6 +31,7 @@ ulong gengoal(ulong n)
     return num;
 }
 
+/* counts from 1 */
 int length(ulong n)
 {
     ulong t = 0;
@@ -44,7 +45,8 @@ int length(ulong n)
 
 /* we could also use arrays for this,
     alas, that would a can of worms
-    digit(number, index) = number[index] */
+    digit(number, index) = number[index]
+    counts from 0 btw */
 int digit(long number, int index)
 {
     if((index > length(number)) || (index < 0))
@@ -111,11 +113,17 @@ void MainWindow::action_guide()
 void MainWindow::action_showgoal()
 {
     QMessageBox m;
+    QAbstractButton *copy;
     m.setWindowTitle("Cheat");
     m.setText(QString::fromStdString("It's " + std::to_string(goal) + " you cheater"));
     m.setIcon(QMessageBox::Information);
-    m.addButton("k", QMessageBox::AcceptRole);
+    copy = m.addButton("i'm too lazy to remember that, please copy that to clipboard", QMessageBox::YesRole);
     m.exec();
+    if(m.clickedButton() == copy)
+    {
+        QClipboard *cb = QGuiApplication::clipboard();
+        cb->setText(QString::fromStdString(std::to_string(goal)));
+    }
 }
 
 void MainWindow::action_inflives(){
@@ -131,7 +139,7 @@ void MainWindow::action_inflives(){
     }
     else if(win)
         return;
-    lives = INT_MAX;
+    lives = 999;
     ui->lcdLives->display(9);
     /* if the game is over */
     ui->buttonGuess->setEnabled(true);
@@ -184,15 +192,15 @@ void MainWindow::action_guess()
        ui->buttonGuess->setEnabled(false);
        ui->spinGuess->setEnabled(false);
        ui->textChecked->setEnabled(false);
+       ui->treeHistory->setEnabled(false);
 
        QMessageBox m;
        m.setWindowTitle("YOU WIN!");
        m.setText("I am, as your servent pleased "
                  "to assure you, that; you have managed to win.");
        m.setIcon(QMessageBox::Information);
-       m.addButton(QString::fromStdString("umm now what..."), QMessageBox::AcceptRole);
+       m.addButton(QString::fromStdString("oh yeah"), QMessageBox::AcceptRole);
        m.exec();
-       // XXX: high scores?
     }
     else if(lives == 1)
     {
@@ -201,6 +209,7 @@ void MainWindow::action_guess()
         ui->buttonGuess->setEnabled(false);
         ui->spinGuess->setEnabled(false);
         ui->textChecked->setEnabled(false);
+        ui->treeHistory->setEnabled(false);
 
         QMessageBox m;
         m.setWindowTitle("INSERT COIN");
@@ -219,6 +228,8 @@ void MainWindow::action_guess()
                 ui->lcdLives->display(++lives);
                 ui->buttonGuess->setEnabled(true);
                 ui->spinGuess->setEnabled(true);
+                ui->textChecked->setEnabled(true);
+                ui->treeHistory->setEnabled(true);
                 break;
             case QMessageBox::RejectRole:
                 action_newgame();
@@ -230,13 +241,15 @@ void MainWindow::action_guess()
     }
     else
     {
-        int i = length(goal) - 1;
-        while(i + 1 > 0)
+        /* len counts from 1, digit counts from 0 */
+        int i = len - 1;
+        while(i >= 0)
         {
             if(digit(goal, i) == digit(guess, i))
-                s += '#';
+                s += "<font color=darkgreen>#</font>";
             else
-                s += "<font color=red>X</font>";
+                s += "<font color=darkred>X</font>";
+           // s += digit(goal, i);
             i--;
         }
         ui->textChecked->setHtml(s);
