@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <QtGlobal>
 #include <QMessageBox>
 #include <QInputDialog>
 #include <QApplication>
@@ -67,7 +68,16 @@ MainWindow::MainWindow(QWidget *parent)
 {
     /* dear Qt, with all due respect, why you on earth
      * you try to make my life so misearable? */
-    action_newgame();
+    if(!action_newgame())
+    {
+        /* one might wonder, why we didn't used QApplication::exit(),
+         * or MainWindow's close(), destory() etc.
+         * because, we don't have acess to original QApplicaiton
+         * nor MainWindow has fully created to be able to exit it.
+         * and since it's not an error (valid choice it is)
+         *  we consider it a great SUCCESS, hence the following: */
+        std::exit(EXIT_SUCCESS);
+    }
 }
 
 MainWindow::~MainWindow()
@@ -75,7 +85,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// file menu
+// help menu
 void MainWindow::action_aboutqt()
 {
     QApplication::aboutQt();
@@ -122,21 +132,23 @@ void MainWindow::action_inflives(){
 
 // file menu
 
-void MainWindow::action_newgame()
+bool MainWindow::action_newgame()
 {
-    bool res = 0;
-    do
+    bool res;
+    len = QInputDialog::getInt(this, "MasterMind", "Enter Length of number:", 2, 2, 9, 1, &res);
+    if(res)
     {
-        len = QInputDialog::getInt(0, "MasterMind", "Enter Length of number:", 2, 2, 9, 1, &res);
-    } while(!res);
-    ui->setupUi(this);
-    lives = len;
-    goal = gengoal(len);
-    win = false;
-    ui->lcdLives->display(lives);
-    ui->spinGuess->setMaximum(pow(10, len) - 1);
-    ui->spinGuess->setMinimum(pow(10, len - 1));
-
+        lives = len;
+        goal = gengoal(len);
+        win = false;
+        ui->setupUi(this);
+        ui->lcdLives->display(lives);
+        ui->spinGuess->setMaximum(pow(10, len) - 1);
+        ui->spinGuess->setMinimum(pow(10, len - 1));
+    }
+    /* you pressed cancel "by mistake" ? too bad! your fault. */
+    qInfo() << res;
+    return res;
 }
 void MainWindow::action_giveup(){
     QMessageBox m;
@@ -163,6 +175,7 @@ void MainWindow::action_guess()
        ui->textChecked->setText(s.repeated(len));
        ui->buttonGuess->setEnabled(false);
        ui->spinGuess->setEnabled(false);
+       ui->textChecked->setEnabled(false);
 
        QMessageBox m;
        m.setWindowTitle("YOU WIN!");
@@ -179,11 +192,12 @@ void MainWindow::action_guess()
         ui->lcdLives->display(--lives);
         ui->buttonGuess->setEnabled(false);
         ui->spinGuess->setEnabled(false);
+        ui->textChecked->setEnabled(false);
 
         QMessageBox m;
         m.setWindowTitle("INSERT COIN");
-        m.setText("I'm afraid you have failed to achive what"
-                  " you have tried to do, and now we are all in"
+        m.setText("I'm afraid you have failed to acheive what"
+                  " you had to do, and now we are all in"
                   " brink of impading doom...");
         m.setIcon(QMessageBox::Critical);
         m.addButton(QString::fromStdString("another chance?"), QMessageBox::AcceptRole);
@@ -192,7 +206,11 @@ void MainWindow::action_guess()
         switch(m.exec())
         {
             case QMessageBox::AcceptRole:
-                // XXX live++
+                /* maybe we should move these into a funcation?
+                 * or maybe we should not... carry on */
+                ui->lcdLives->display(++lives);
+                ui->buttonGuess->setEnabled(true);
+                ui->spinGuess->setEnabled(true);
                 break;
             case QMessageBox::RejectRole:
                 action_newgame();

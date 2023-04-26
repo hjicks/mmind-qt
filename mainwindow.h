@@ -29,7 +29,7 @@ private slots:
     void action_inflives();
 
     // file menu
-    void action_newgame();
+    bool action_newgame();
     void action_giveup();
 
     // main window
