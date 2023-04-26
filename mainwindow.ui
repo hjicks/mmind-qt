@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>440</width>
-    <height>364</height>
+    <width>500</width>
+    <height>440</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,20 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>440</width>
+    <width>500</width>
     <height>364</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>440</width>
-    <height>364</height>
+    <width>500</width>
+    <height>440</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>500</width>
+    <height>440</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -40,8 +46,8 @@
      <rect>
       <x>10</x>
       <y>130</y>
-      <width>411</width>
-      <height>191</height>
+      <width>471</width>
+      <height>261</height>
      </rect>
     </property>
     <column>
@@ -69,8 +75,14 @@
       <height>101</height>
      </rect>
     </property>
+    <property name="smallDecimalPoint">
+     <bool>false</bool>
+    </property>
     <property name="digitCount">
-     <number>1</number>
+     <number>2</number>
+    </property>
+    <property name="segmentStyle">
+     <enum>QLCDNumber::Flat</enum>
     </property>
    </widget>
    <widget class="QTextEdit" name="textChecked">
@@ -81,7 +93,7 @@
      <rect>
       <x>190</x>
       <y>80</y>
-      <width>231</width>
+      <width>291</width>
       <height>41</height>
      </rect>
     </property>
@@ -96,6 +108,9 @@
       <family>Monospace</family>
       <pointsize>26</pointsize>
      </font>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>IBeamCursor</cursorShape>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
@@ -150,7 +165,7 @@
      <rect>
       <x>190</x>
       <y>33</y>
-      <width>231</width>
+      <width>291</width>
       <height>41</height>
      </rect>
     </property>
@@ -179,7 +194,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>440</width>
+     <width>500</width>
      <height>20</height>
     </rect>
    </property>
@@ -401,8 +416,8 @@
    <slot>action_guide()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>219</x>
-     <y>9</y>
+     <x>-1</x>
+     <y>-1</y>
     </hint>
     <hint type="destinationlabel">
      <x>219</x>

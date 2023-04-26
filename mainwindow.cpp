@@ -7,7 +7,8 @@
 #include <QTreeWidgetItem> /* guessTree */
 #include <QClipboard>
 
-int len = 0, goal = 0, guess = 0, lives = 0;
+uint64_t guess = 0, goal = 0;
+int len = 0, lives = 0;
 bool win;
 
 
@@ -153,7 +154,7 @@ void MainWindow::action_inflives(){
 bool MainWindow::action_newgame()
 {
     bool res;
-    len = QInputDialog::getInt(this, "MasterMind", "Enter Length of number:", 2, 2, 9, 1, &res);
+    len = QInputDialog::getInt(this, "MasterMind", "Enter Length of number:", 2, 2, 10, 1, &res);
     if(res)
     {
         lives = len;
