@@ -96,7 +96,17 @@ void MainWindow::action_about()
     QMessageBox::about(this, "about", "MasterMind-qt r2");
 }
 
-void MainWindow::action_guide(){}
+// XXX
+void MainWindow::action_guide()
+{
+    QMessageBox m;
+    m.setWindowTitle("Help? there is no help");
+    m.setText("you fell for this this trap? lol. "
+              "seriously, remind me to write one");
+    m.setIcon(QMessageBox::Information);
+    m.addButton(":(", QMessageBox::AcceptRole);
+    m.exec();
+}
 
 // cheats menu
 void MainWindow::action_showgoal()

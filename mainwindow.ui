@@ -394,6 +394,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionGuide</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_guide()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>219</x>
+     <y>9</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>181</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>action_aboutqt()</slot>
