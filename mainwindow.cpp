@@ -18,14 +18,14 @@ ulong gengoal(ulong n)
     /* it's technically legal, but
     we get a int that's shorter than n */
     do
-        num = arc4random() % 10;
+        num = random() % 10;
     while (num == 0);
 
     /* we have already generated one digit */
     while(n > 1)
     {
         num *= 10;
-        num += arc4random() % 10;
+        num += random() % 10;
         n--;
     }
     return num;
@@ -118,6 +118,7 @@ void MainWindow::action_showgoal()
     m.setText(QString::fromStdString("It's " + std::to_string(goal) + " you cheater"));
     m.setIcon(QMessageBox::Information);
     copy = m.addButton("i'm too lazy to remember that, please copy that to clipboard", QMessageBox::YesRole);
+    m.addButton("k", QMessageBox::AcceptRole);
     m.exec();
     if(m.clickedButton() == copy)
     {
@@ -170,7 +171,7 @@ void MainWindow::action_giveup()
 {
     QMessageBox m;
     QAbstractButton *y;
-    m.setText("But-But... are you really totally 100% completely sure about it?");
+    m.setText("B-but... are you really totally completely 100% sure about it?");
     m.setIcon(QMessageBox::Question);
     y = m.addButton("Yea", QMessageBox::AcceptRole);
     m.addButton("Nay!", QMessageBox::RejectRole);
