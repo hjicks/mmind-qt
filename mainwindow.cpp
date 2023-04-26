@@ -141,7 +141,7 @@ void MainWindow::action_inflives(){
         return;
     lives = 999;
     ui->lcdLives->display(9);
-    /* if the game is over */
+    /* if the game was over */
     ui->buttonGuess->setEnabled(true);
     ui->spinGuess->setEnabled(true);
     ui->textChecked->setEnabled(true);
@@ -201,7 +201,7 @@ void MainWindow::action_guess()
        m.setText("I am, as your servent pleased "
                  "to assure you, that; you have managed to win.");
        m.setIcon(QMessageBox::Information);
-       m.addButton(QString::fromStdString("oh yeah"), QMessageBox::AcceptRole);
+       m.addButton("oh yeah", QMessageBox::AcceptRole);
        m.exec();
     }
     else if(lives == 1)
@@ -220,10 +220,11 @@ void MainWindow::action_guess()
                   " you had to do, and now we are all in"
                   " brink of impading doom...");
         m.setIcon(QMessageBox::Critical);
-        retry = m.addButton(QString::fromStdString("another chance?"), QMessageBox::AcceptRole);
-        newgame = m.addButton(QString::fromStdString("dices were packed! new game and i shall win!"), QMessageBox::RejectRole);
-        leave = m.addButton(QString::fromStdString("God has forsaken me, *leaving in shame*"), QMessageBox::DestructiveRole);
+        retry = m.addButton("another chance?", QMessageBox::AcceptRole);
+        newgame = m.addButton("dices were packed! new game and i shall win!", QMessageBox::RejectRole);
+        leave = m.addButton("God has forsaken me, *leaving in shame*", QMessageBox::DestructiveRole);
         m.exec();
+
         /* fun(?) fact: switch doesn't work with non numerical types! */
         if(m.clickedButton() == retry)
         {
