@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include <cmath> /* pow() */
 #include <QMessageBox> /* errors, infos */
 #include <QInputDialog> /* getting len */
 #include <QApplication> /* seems to be needed in all qt programs */
