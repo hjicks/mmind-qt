@@ -20,14 +20,14 @@ ulong gengoal(ulong n)
     /* it's technically legal, but
     we get a int that's shorter than n */
     do
-        num = random() % 10;
+        num = rand() % 10;
     while (num == 0);
 
     /* we have already generated one digit */
     while(n > 1)
     {
         num *= 10;
-        num += random() % 10;
+        num += rand() % 10;
         n--;
     }
     return num;
@@ -169,20 +169,6 @@ bool MainWindow::action_newgame()
     /* you pressed cancel "by mistake" ? too bad! your fault. */
     return res;
 }
-void MainWindow::action_giveup()
-{
-    QMessageBox m;
-    QAbstractButton *y;
-    m.setText("B-but... are you really totally completely 100% sure about it?");
-    m.setIcon(QMessageBox::Question);
-    y = m.addButton("Yea", QMessageBox::AcceptRole);
-    m.addButton("Nay!", QMessageBox::RejectRole);
-    m.exec();
-    if(m.clickedButton() == y)
-    {
-            action_newgame();
-    }
-}
 
 // main window
 void MainWindow::action_guess()
@@ -201,7 +187,7 @@ void MainWindow::action_guess()
 
        QMessageBox m;
        m.setWindowTitle("YOU WIN!");
-       m.setText("I am pleasedto assure you, that; you have managed to win.");
+       m.setText("I am pleased to assure you, that; you have managed to win.");
        m.setIcon(QMessageBox::Information);
        m.addButton("indeed", QMessageBox::AcceptRole);
        m.exec();

@@ -203,7 +203,6 @@
      <string>File</string>
     </property>
     <addaction name="actionNew_game"/>
-    <addaction name="actionGiveup"/>
     <addaction name="separator"/>
     <addaction name="actionQuit"/>
    </widget>
@@ -241,11 +240,6 @@
   <action name="actionNew_game">
    <property name="text">
     <string>New game</string>
-   </property>
-  </action>
-  <action name="actionGiveup">
-   <property name="text">
-    <string>Giveup</string>
    </property>
   </action>
   <action name="actionQuit">
@@ -382,22 +376,6 @@
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_newgame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>247</x>
-     <y>187</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionGiveup</sender>
-   <signal>triggered()</signal>
-   <receiver>MainWindow</receiver>
-   <slot>action_giveup()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
