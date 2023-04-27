@@ -142,7 +142,7 @@ void MainWindow::action_inflives(){
     else if(win)
         return;
     lives = 999;
-    ui->lcdLives->display(9);
+    ui->lcdLives->display(99);
     /* if the game was over */
     ui->buttonGuess->setEnabled(true);
     ui->spinGuess->setEnabled(true);
@@ -200,10 +200,9 @@ void MainWindow::action_guess()
 
        QMessageBox m;
        m.setWindowTitle("YOU WIN!");
-       m.setText("I am, as your servent pleased "
-                 "to assure you, that; you have managed to win.");
+       m.setText("I am pleasedto assure you, that; you have managed to win.");
        m.setIcon(QMessageBox::Information);
-       m.addButton("oh yeah", QMessageBox::AcceptRole);
+       m.addButton("indeed", QMessageBox::AcceptRole);
        m.exec();
     }
     else if(lives == 1)
