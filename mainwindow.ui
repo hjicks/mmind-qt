@@ -412,6 +412,5 @@
   <slot>action_guess()</slot>
   <slot>action_inflives()</slot>
   <slot>action_newgame()</slot>
-  <slot>action_giveup()</slot>
  </slots>
 </ui>

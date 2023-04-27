@@ -30,7 +30,6 @@ private slots:
 
     // file menu
     bool action_newgame();
-    void action_giveup();
 
     // main window
     void action_guess();
