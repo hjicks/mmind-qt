@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,21 +18,24 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>364</height>
+    <width>440</width>
+    <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </size>
   </property>
   <property name="baseSize">
    <size>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>MasterMind</string>
@@ -45,10 +48,16 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
-      <width>471</width>
+      <y>120</y>
+      <width>421</width>
       <height>261</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <column>
      <property name="text">
@@ -70,16 +79,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="smallDecimalPoint">
      <bool>false</bool>
     </property>
     <property name="digitCount">
-     <number>2</number>
+     <number>1</number>
     </property>
     <property name="segmentStyle">
      <enum>QLCDNumber::Flat</enum>
@@ -92,8 +104,8 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>80</y>
-      <width>291</width>
+      <y>70</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -105,12 +117,15 @@
     </property>
     <property name="font">
      <font>
-      <family>Monospace</family>
-      <pointsize>26</pointsize>
+      <family>Lucida Console</family>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
@@ -135,7 +150,7 @@
     <property name="geometry">
      <rect>
       <x>140</x>
-      <y>40</y>
+      <y>30</y>
       <width>31</width>
       <height>21</height>
      </rect>
@@ -151,7 +166,7 @@
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>80</y>
+      <y>70</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -160,33 +175,35 @@
      <string>Guess!</string>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinGuess">
+   <widget class="QLineEdit" name="lineGuess">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>33</y>
-      <width>291</width>
+      <y>10</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Monospace</family>
-      <pointsize>26</pointsize>
+      <family>Lucida Console</family>
+      <pointsize>28</pointsize>
      </font>
     </property>
-    <property name="cursor">
-     <cursorShape>IBeamCursor</cursorShape>
+    <property name="text">
+     <string>0</string>
     </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhNone</set>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>210</y>
+      <width>258</width>
+      <height>31</height>
+     </rect>
     </property>
-    <property name="maximum">
-     <number>1000000000</number>
-    </property>
-    <property name="stepType">
-     <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout"/>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -194,7 +211,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>440</width>
      <height>20</height>
     </rect>
    </property>
@@ -400,6 +417,22 @@
     <hint type="destinationlabel">
      <x>219</x>
      <y>181</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineGuess</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_guess()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>219</y>
     </hint>
    </hints>
   </connection>

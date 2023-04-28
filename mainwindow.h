@@ -33,6 +33,14 @@ private slots:
 
     // main window
     void action_guess();
+    void action_objstate(bool);
+    void addguess(std::string);
+    bool chkguess(std::string, std::string, int);
+    void cheatgoal();
+
+protected:
+    void keyPressEvent(QKeyEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // MAINWINDOW_H
