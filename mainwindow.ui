@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,21 +18,24 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>500</width>
-    <height>364</height>
+    <width>440</width>
+    <height>420</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </size>
   </property>
   <property name="baseSize">
    <size>
-    <width>500</width>
-    <height>440</height>
+    <width>440</width>
+    <height>420</height>
    </size>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::StrongFocus</enum>
   </property>
   <property name="windowTitle">
    <string>MasterMind</string>
@@ -45,10 +48,16 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>130</y>
-      <width>471</width>
+      <y>120</y>
+      <width>421</width>
       <height>261</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Calibri</family>
+      <pointsize>12</pointsize>
+     </font>
     </property>
     <column>
      <property name="text">
@@ -70,16 +79,19 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>10</y>
       <width>111</width>
       <height>101</height>
      </rect>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
     </property>
     <property name="smallDecimalPoint">
      <bool>false</bool>
     </property>
     <property name="digitCount">
-     <number>2</number>
+     <number>1</number>
     </property>
     <property name="segmentStyle">
      <enum>QLCDNumber::Flat</enum>
@@ -92,8 +104,8 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>80</y>
-      <width>291</width>
+      <y>70</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
@@ -105,12 +117,15 @@
     </property>
     <property name="font">
      <font>
-      <family>Monospace</family>
-      <pointsize>26</pointsize>
+      <family>Lucida Console</family>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="cursor" stdset="0">
      <cursorShape>IBeamCursor</cursorShape>
+    </property>
+    <property name="focusPolicy">
+     <enum>Qt::NoFocus</enum>
     </property>
     <property name="layoutDirection">
      <enum>Qt::LeftToRight</enum>
@@ -131,27 +146,14 @@
      <set>Qt::TextSelectableByMouse</set>
     </property>
    </widget>
-   <widget class="QLabel" name="labelLives">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>40</y>
-      <width>31</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="frameShape">
-     <enum>QFrame::NoFrame</enum>
-    </property>
-    <property name="text">
-     <string>Lives</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="buttonGuess">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>80</y>
+      <y>70</y>
       <width>51</width>
       <height>41</height>
      </rect>
@@ -159,33 +161,43 @@
     <property name="text">
      <string>Guess!</string>
     </property>
+    <property name="autoDefault">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QSpinBox" name="spinGuess">
+   <widget class="QLineEdit" name="lineGuess">
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>33</y>
-      <width>291</width>
+      <y>10</y>
+      <width>241</width>
       <height>41</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Monospace</family>
-      <pointsize>26</pointsize>
+      <family>Lucida Console</family>
+      <pointsize>28</pointsize>
      </font>
     </property>
-    <property name="cursor">
-     <cursorShape>IBeamCursor</cursorShape>
+    <property name="text">
+     <string>0</string>
     </property>
-    <property name="inputMethodHints">
-     <set>Qt::ImhNone</set>
+   </widget>
+   <widget class="QPushButton" name="buttonLives">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>30</y>
+      <width>31</width>
+      <height>22</height>
+     </rect>
     </property>
-    <property name="maximum">
-     <number>1000000000</number>
+    <property name="text">
+     <string>Lives</string>
     </property>
-    <property name="stepType">
-     <enum>QAbstractSpinBox::AdaptiveDecimalStepType</enum>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
@@ -194,7 +206,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>500</width>
+     <width>440</width>
      <height>20</height>
     </rect>
    </property>
@@ -248,6 +260,9 @@
    </property>
   </action>
   <action name="actionShow_Goal">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Show Goal</string>
    </property>
@@ -403,6 +418,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>lineGuess</sender>
+   <signal>returnPressed()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_guess()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>335</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>219</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonLives</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_showgoal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>145</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineGuess</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>MainWindow</receiver>
+   <slot>action_lineGuess_txtchange()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>50</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>219</x>
+     <y>209</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>action_aboutqt()</slot>
@@ -412,5 +475,6 @@
   <slot>action_guess()</slot>
   <slot>action_inflives()</slot>
   <slot>action_newgame()</slot>
+  <slot>action_lineGuess_txtchange()</slot>
  </slots>
 </ui>

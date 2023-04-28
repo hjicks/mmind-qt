@@ -33,6 +33,11 @@ private slots:
 
     // main window
     void action_guess();
+    void action_objstate(bool);
+    void addguess(std::string);
+    bool chkguess(std::string, std::string, int);
+    void action_lineGuess_txtchange();
+
 };
 
 #endif // MAINWINDOW_H
