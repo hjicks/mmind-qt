@@ -37,7 +37,7 @@ private slots:
     void addguess(std::string);
     bool chkguess(std::string, std::string, int);
     void action_lineGuess_txtchange();
-
+    void action_buttonLives();
 };
 
 #endif // MAINWINDOW_H

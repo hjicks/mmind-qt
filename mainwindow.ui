@@ -104,9 +104,9 @@
     <property name="geometry">
      <rect>
       <x>190</x>
-      <y>70</y>
+      <y>60</y>
       <width>241</width>
-      <height>41</height>
+      <height>51</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -219,6 +219,9 @@
     <addaction name="actionQuit"/>
    </widget>
    <widget class="QMenu" name="menuCheats">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="title">
      <string>Cheats</string>
     </property>
@@ -261,7 +264,7 @@
   </action>
   <action name="actionShow_Goal">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
     <string>Show Goal</string>
@@ -438,7 +441,7 @@
    <sender>buttonLives</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_showgoal()</slot>
+   <slot>action_buttonLives()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>145</x>
@@ -476,5 +479,6 @@
   <slot>action_inflives()</slot>
   <slot>action_newgame()</slot>
   <slot>action_lineGuess_txtchange()</slot>
+  <slot>action_buttonLives()</slot>
  </slots>
 </ui>

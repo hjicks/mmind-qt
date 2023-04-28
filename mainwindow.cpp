@@ -6,20 +6,19 @@
 #include <QApplication> /* seems to be needed in all qt programs */
 #include <QTreeWidgetItem> /* guessTree */
 #include <QClipboard>
-#include <QPalette>
+#include <QPalette> /* lcdLabel color */
 
 using namespace std;
 
 string guess, goal;
-unsigned int len = 0;
-int lives = 0;
-int chance = 1;
-bool win;
-bool anotherchance = true;
+unsigned int len = 0, chance = 1;
+int lives = 0; /* qlcd doesn't accept uint */
+bool win = false, anotherchance = true;
 
 QPalette lcolor;
 
-string gengoal(int len) {
+string gengoal(int len)
+{
     srand(time(0));
     string digits;
     for (int i = 0; i < len; i++) {
@@ -34,9 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     if(!action_newgame())
-    {
         std::exit(EXIT_SUCCESS);
-    }
     setWindowFlags( Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint );
 }
 
@@ -45,25 +42,25 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::action_lineGuess_txtchange() {
+void MainWindow::action_lineGuess_txtchange()
+{
     guess = ui->lineGuess->text().toStdString();
-    if (guess.length() == len) {
-
+    if (guess.length() == len)
         ui->buttonGuess->setEnabled(true);
-    }
-    else {
+    else
         ui->buttonGuess->setEnabled(false);
-    }
 }
 
-void MainWindow::action_objstate(bool state) {
+void MainWindow::action_objstate(bool state)
+{
     ui->buttonGuess->setEnabled(state);
     ui->lineGuess->setEnabled(state);
     ui->textChecked->setEnabled(state);
     ui->treeHistory->setEnabled(state);
 }
 
-void MainWindow::addguess(string guess) {
+void MainWindow::addguess(string guess)
+{
     QTreeWidgetItem *item = new QTreeWidgetItem();
     item->setText(0, QString::fromStdString(to_string(chance)));
     item->setText(1, QString::fromStdString(guess));
@@ -72,14 +69,15 @@ void MainWindow::addguess(string guess) {
 }
 
 bool MainWindow::chkguess(string guess, string goal, int len) {
-    string result;
-    for (int i = 0; i < len; i++) {
-        if (guess[i] == goal[i]) {
+    QString result;
+    for (int i = 0; i < len; i++)
+    {
+        if (guess[i] == goal[i])
             result += "<font color=darkgreen>#</font>";
-        }
-        else { result += "<font color=darkred>X</font>"; }
+        else
+            result += "<font color=darkred>X</font>";
     }
-    ui->textChecked->setHtml(QString::fromStdString(result));
+    ui->textChecked->setHtml(result);
     if (guess == goal)  return true;
     else {
 
@@ -87,7 +85,7 @@ bool MainWindow::chkguess(string guess, string goal, int len) {
     }
 }
 
-// help menu
+/* help menu */
 void MainWindow::action_aboutqt()
 {
     QApplication::aboutQt();
@@ -95,7 +93,7 @@ void MainWindow::action_aboutqt()
 
 void MainWindow::action_about()
 {
-    QMessageBox::about(this, "about", "MasterMind-qt V2.2");
+    QMessageBox::about(this, "about", "MasterMind-qt v2.3");
 }
 
 // XXX
@@ -110,7 +108,22 @@ void MainWindow::action_guide()
     m.exec();
 }
 
-// cheats menu
+/* cheats menu, action_livesButton secrectly enables it */
+void MainWindow::action_buttonLives()
+{
+    if(ui->menuCheats->isEnabled())
+    {
+        QMessageBox m;
+        m.setWindowTitle("secrect secrect menu");
+        m.setText("take a look at cheats menu instead");
+        m.setIcon(QMessageBox::Information);
+        m.addButton("ooooo!", QMessageBox::AcceptRole);
+        m.exec();
+        return;
+    }
+    ui->menuCheats->setEnabled(true);
+}
+
 void MainWindow::action_showgoal()
 {
     QMessageBox m;
@@ -119,7 +132,7 @@ void MainWindow::action_showgoal()
     m.setText(QString::fromStdString("It's " + goal + " you cheater!"));
     m.setIcon(QMessageBox::Information);
     copy = m.addButton("Copy to clipboard (that lazy?!)", QMessageBox::YesRole);
-    m.addButton("Fine", QMessageBox::AcceptRole);
+    m.addButton("Thanks!", QMessageBox::AcceptRole);
     m.exec();
     if(m.clickedButton() == copy)
     {
@@ -175,7 +188,7 @@ bool MainWindow::action_newgame()
     return res;
 }
 
-// main window
+/* main window */
 void MainWindow::action_guess()
 {
 
@@ -207,7 +220,7 @@ void MainWindow::action_guess()
        m.setWindowTitle("YOU WIN!");
        m.setText("I am pleased to assure you, that; you have managed to win!");
        m.setIcon(QMessageBox::Information);
-       m.addButton("Indeed!", QMessageBox::AcceptRole);
+       m.addButton("Cool!", QMessageBox::AcceptRole);
        m.exec();
     }
     else if (!res && lives == 0)
@@ -221,10 +234,11 @@ void MainWindow::action_guess()
         m.setWindowTitle("YOU LOST!");
         m.setIcon(QMessageBox::Critical);
         if (anotherchance) {
-            m.setText("I am ashamed to tell you, that; you lost.");
+            m.setText("I am afraid, you lost. \n"
+                      "game over buddy");
             retry = m.addButton("Another chance?", QMessageBox::AcceptRole);
         }
-        else m.setText("I am ashamed to tell you, that; you really lost. \n"
+        else m.setText("I am afriad you REALLY lost. \n"
                       "Goal was: " + QString::fromStdString(goal));
         newgame = m.addButton("New game and i shall win!", QMessageBox::DestructiveRole);
         leave = m.addButton("Ok", QMessageBox::RejectRole);
