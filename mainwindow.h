@@ -17,8 +17,18 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    void addguess(std::string);
+    bool chkguess(std::string, std::string, int);
 
 private slots:
+    // file menu
+    bool action_newgame();
+
+    // main window
+    void action_guess();
+    void action_objstate(bool);
+    void action_lineGuess_txtchange();
+
     // help menu
     void action_aboutqt();
     void action_about();
@@ -27,16 +37,6 @@ private slots:
     // cheats menu
     void action_showgoal();
     void action_inflives();
-
-    // file menu
-    bool action_newgame();
-
-    // main window
-    void action_guess();
-    void action_objstate(bool);
-    void addguess(std::string);
-    bool chkguess(std::string, std::string, int);
-    void action_lineGuess_txtchange();
     void action_buttonLives();
 };
 
