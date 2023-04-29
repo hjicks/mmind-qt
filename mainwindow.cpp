@@ -5,7 +5,7 @@
 #include <QInputDialog> /* getting len */
 #include <QApplication> /* seems to be needed in all qt programs */
 #include <QTreeWidgetItem> /* guessTree */
-#include <QClipboard>
+#include <QClipboard> /* copying in showgoal() */
 #include <QPalette> /* lcdLabel color */
 
 using namespace std;
