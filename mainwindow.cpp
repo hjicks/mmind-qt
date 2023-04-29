@@ -258,7 +258,7 @@ void MainWindow::action_guess()
                       "Game over buddy.");
             retry = m.addButton("Another chance?", QMessageBox::AcceptRole);
         }
-        else m.setText("I am afraid, you REALLY lost.\n"
+        else m.setText("I am afraid, you have REALLY lost.\n"
                       "Goal was: " + QString::fromStdString(goal));
         newgame = m.addButton("New game and i shall win!", QMessageBox::DestructiveRole);
         leave = m.addButton("Ok", QMessageBox::RejectRole);
