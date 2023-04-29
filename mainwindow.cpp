@@ -30,7 +30,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     if(!action_newgame()) std::exit(EXIT_SUCCESS);
-    setWindowFlags( Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint );
+    setWindowFlags(Qt::Window | Qt::WindowMinimizeButtonHint | Qt::WindowCloseButtonHint
+                   | Qt::MSWindowsFixedSizeDialogHint);
 }
 
 MainWindow::~MainWindow()
