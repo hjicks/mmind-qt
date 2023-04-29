@@ -16,14 +16,12 @@ int lives = 0; /* qlcd doesn't accept uint */
 bool win = false, anotherchance = true;
 double pbar = 0;
 QPalette lcolor;
-QFont f("Lucida Console");
 
 string gengoal(int len)
 {
     string digits;
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < len; i++)
         digits += to_string(rand() % 10);
-    }
     return digits;
 }
 
@@ -43,20 +41,8 @@ MainWindow::~MainWindow()
 void MainWindow::action_lineGuess_txtchange()
 {
     guess = ui->lineGuess->text().toStdString();
-    if (guess.empty()) {
-        f.setPointSize(12);
-        ui->lineGuess->setFont(f);
-    }
-    else if (guess.length() == len) {
-        f.setPointSize(28);
-        ui->lineGuess->setFont(f);
+    if (guess.length() == len)
         ui->buttonGuess->setEnabled(true);
-    }
-    else {
-        f.setPointSize(28);
-        ui->lineGuess->setFont(f);
-        ui->buttonGuess->setEnabled(false);
-	}
 }
 
 void MainWindow::action_objstate(bool state)
@@ -65,6 +51,7 @@ void MainWindow::action_objstate(bool state)
     ui->lineGuess->setEnabled(state);
     ui->textChecked->setEnabled(state);
     ui->treeHistory->setEnabled(state);
+    ui->progressBar->setEnabled(state);
 }
 
 void MainWindow::addguess(string guess)
@@ -86,11 +73,14 @@ bool MainWindow::chkguess(string guess, string goal, int len) {
             result += "<font color=darkgreen>#</font>";
             pbar++;
         }
-        else result += "<font color=darkred>X</font>";
+        else
+            result += "<font color=darkred>X</font>";
     }
     ui->textChecked->setHtml(result);
-    if (guess == goal)  return true;
-    else return false;
+    if (guess == goal)
+        return true;
+    else
+        return false;
 }
 
 /* help menu */
@@ -125,8 +115,8 @@ void MainWindow::action_guide()
               "Result of your guess will be shown below box\n"
               "of your guess. Also, you can check guess history in\n"
               "guesses tree.\n"
-              "Do not forget to check the Cheats menu!\n"
-              "Maybe you can unlock our hidden cheat...");
+              "Do not forget to check the Cheats menu;\n"
+              "if you can unlock it...");
     m.setIcon(QMessageBox::Question);
     m.addButton("Ok", QMessageBox::AcceptRole);
     m.exec();
@@ -206,7 +196,6 @@ bool MainWindow::action_newgame()
         anotherchance = true;
         QString fill = "?";
         ui->textChecked->setText(fill.repeated(len));
-        ui->lineGuess->setPlaceholderText("Enter your guess here");
     }
     ui->lineGuess->setValidator(new QRegularExpressionValidator(QRegularExpression("^[0-9]*$"),this));
 
@@ -221,7 +210,8 @@ void MainWindow::action_guess()
     {
         QTreeWidgetItem *item = ui->treeHistory->topLevelItem(h);
         item->setSelected(false);
-        if (guess == item->text(1).toStdString()) {
+        if (guess == item->text(1).toStdString())
+        {
             item->setSelected(true);
             QMessageBox m;
             m.setWindowTitle("Guess Repeated");
@@ -262,7 +252,8 @@ void MainWindow::action_guess()
         QAbstractButton *retry, *newgame, *leave;
         m.setWindowTitle("YOU LOST!");
         m.setIcon(QMessageBox::Critical);
-        if (anotherchance) {
+        if (anotherchance)
+        {
             m.setText("I am afraid, you lost.\n"
                       "Game over buddy.");
             retry = m.addButton("Another chance?", QMessageBox::AcceptRole);
