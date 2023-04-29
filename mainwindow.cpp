@@ -261,7 +261,7 @@ void MainWindow::action_guess()
         chance++;
     }
 
-    if (lives == 1) {
+    if (lives == 1 && !win) {
         lcolor.setColor(QPalette::WindowText, Qt::darkRed);
         ui->lcdLives->setPalette(lcolor);
     }
