@@ -1,3 +1,7 @@
 Makefile
 mastermind-qt.pro.user
+.qmake.stash
+*.out
+mastermind-qt
+*.autosave
 
