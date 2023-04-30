@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 
-#include <QMessageBox>
-#include <QInputDialog>
 #include <QApplication>
 
 using namespace std;

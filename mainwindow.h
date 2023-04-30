@@ -25,9 +25,9 @@ private slots:
     bool action_newgame();
 
     // main window
-    void action_guess();
-    void action_objstate(bool);
-    void action_lineGuess_txtchange();
+    void btnGuess_click();
+    void objects_State(bool);
+    void lineGuess_txtchange();
 
     // help menu
     void action_aboutqt();
@@ -37,7 +37,7 @@ private slots:
     // cheats menu
     void action_showgoal();
     void action_inflives();
-    void action_buttonLives();
+    void btnLives_click();
 };
 
 #endif // MAINWINDOW_H

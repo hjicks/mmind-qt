@@ -40,6 +40,11 @@
   <property name="windowTitle">
    <string>MasterMind</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normalon>guess.ico</normalon>
+   </iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTreeWidget" name="treeHistory">
     <property name="enabled">
@@ -186,7 +191,7 @@
     <property name="font">
      <font>
       <family>Lucida Console</family>
-      <pointsize>12</pointsize>
+      <pointsize>28</pointsize>
      </font>
     </property>
     <property name="inputMethodHints">
@@ -196,16 +201,16 @@
      <string/>
     </property>
     <property name="placeholderText">
-     <string>guess here</string>
+     <string>Guess here</string>
     </property>
    </widget>
    <widget class="QPushButton" name="buttonLives">
     <property name="geometry">
      <rect>
       <x>130</x>
-      <y>20</y>
-      <width>51</width>
-      <height>31</height>
+      <y>30</y>
+      <width>41</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="font">
@@ -251,9 +256,9 @@
     <property name="title">
      <string>File</string>
     </property>
-    <addaction name="actionNew_game"/>
+    <addaction name="itemNewGame"/>
     <addaction name="separator"/>
-    <addaction name="actionQuit"/>
+    <addaction name="itemQuit"/>
    </widget>
    <widget class="QMenu" name="menuCheats">
     <property name="enabled">
@@ -262,17 +267,17 @@
     <property name="title">
      <string>Cheats</string>
     </property>
-    <addaction name="actionShow_Goal"/>
-    <addaction name="actionInfinate_Lives"/>
+    <addaction name="itemShowGoal"/>
+    <addaction name="itemInfLives"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionGuide"/>
+    <addaction name="itemGuide"/>
     <addaction name="separator"/>
-    <addaction name="actionAbout_MasterMind_Qt"/>
-    <addaction name="actionAbout_Qt"/>
+    <addaction name="itemAboutMMind"/>
+    <addaction name="itemAboutQt"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuCheats"/>
@@ -289,17 +294,17 @@
     <bool>false</bool>
    </property>
   </widget>
-  <action name="actionNew_game">
+  <action name="itemNewGame">
    <property name="text">
     <string>New game</string>
    </property>
   </action>
-  <action name="actionQuit">
+  <action name="itemQuit">
    <property name="text">
     <string>Quit</string>
    </property>
   </action>
-  <action name="actionShow_Goal">
+  <action name="itemShowGoal">
    <property name="enabled">
     <bool>true</bool>
    </property>
@@ -307,22 +312,22 @@
     <string>Show Goal</string>
    </property>
   </action>
-  <action name="actionInfinate_Lives">
+  <action name="itemInfLives">
    <property name="text">
     <string>HESOYAM (inf lives)</string>
    </property>
   </action>
-  <action name="actionGuide">
+  <action name="itemGuide">
    <property name="text">
     <string>Guide</string>
    </property>
   </action>
-  <action name="actionAbout_MasterMind_Qt">
+  <action name="itemAboutMMind">
    <property name="text">
     <string>About MasterMind-Qt</string>
    </property>
   </action>
-  <action name="actionAbout_Qt">
+  <action name="itemAboutQt">
    <property name="text">
     <string>About Qt</string>
    </property>
@@ -331,7 +336,7 @@
  <resources/>
  <connections>
   <connection>
-   <sender>actionAbout_Qt</sender>
+   <sender>itemAboutQt</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_aboutqt()</slot>
@@ -347,7 +352,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionQuit</sender>
+   <sender>itemQuit</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>close()</slot>
@@ -363,7 +368,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionAbout_MasterMind_Qt</sender>
+   <sender>itemAboutMMind</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_about()</slot>
@@ -379,7 +384,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionShow_Goal</sender>
+   <sender>itemShowGoal</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_showgoal()</slot>
@@ -398,7 +403,7 @@
    <sender>buttonGuess</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_guess()</slot>
+   <slot>btnGuess_click()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>155</x>
@@ -411,7 +416,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionInfinate_Lives</sender>
+   <sender>itemInfLives</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_inflives()</slot>
@@ -427,7 +432,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionNew_game</sender>
+   <sender>itemNewGame</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_newgame()</slot>
@@ -443,7 +448,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionGuide</sender>
+   <sender>itemGuide</sender>
    <signal>triggered()</signal>
    <receiver>MainWindow</receiver>
    <slot>action_guide()</slot>
@@ -462,7 +467,7 @@
    <sender>lineGuess</sender>
    <signal>returnPressed()</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_guess()</slot>
+   <slot>btnGuess_click()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>335</x>
@@ -478,7 +483,7 @@
    <sender>buttonLives</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_buttonLives()</slot>
+   <slot>btnLives_click()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>145</x>
@@ -494,7 +499,7 @@
    <sender>lineGuess</sender>
    <signal>textChanged(QString)</signal>
    <receiver>MainWindow</receiver>
-   <slot>action_lineGuess_txtchange()</slot>
+   <slot>lineGuess_txtchange()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>310</x>
@@ -512,10 +517,10 @@
   <slot>action_about()</slot>
   <slot>action_guide()</slot>
   <slot>action_showgoal()</slot>
-  <slot>action_guess()</slot>
   <slot>action_inflives()</slot>
   <slot>action_newgame()</slot>
-  <slot>action_lineGuess_txtchange()</slot>
-  <slot>action_buttonLives()</slot>
+  <slot>lineGuess_txtchange()</slot>
+  <slot>btnLives_click()</slot>
+  <slot>btnGuess_click()</slot>
  </slots>
 </ui>
