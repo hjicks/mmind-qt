@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    /* controls cancel on first recceive length dialog
+    /* controls cancel on first receive length dialog
        one might wonder, why we didn't use QApplication::exit(),
        or MainWindow's close(), destory(), etc.
        because, we don't have access to original QApplicaiton
@@ -182,6 +182,7 @@ void MainWindow::btnGuess_click()
     else if (!win && lives == 0)
     {
         addguess(guess);
+        chance++;
         objects_State(false);
         /* lose message box */
         QMessageBox m;
@@ -202,18 +203,18 @@ void MainWindow::btnGuess_click()
 
         /* controls lose message box buttons */
         if(anotherchance && m.clickedButton() == retry)
-        {       /* controls to give user only one another chance */
-                anotherchance = false;
-                ui->lcdLives->display(++lives);
-                objects_State(true);
-                ui->lineGuess->setFocus();
+        {   /* controls to give user only one another chance */
+            anotherchance = false;
+            ui->lcdLives->display(++lives);
+            objects_State(true);
+            ui->lineGuess->setFocus();
         }
         else if(m.clickedButton() == newgame)
-                action_newgame();
+            action_newgame();
         else if(m.clickedButton() == leave)
-                m.close();
-
+            m.close();
     }
+    
     /* gets ready for next guess */
     else
     {
